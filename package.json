@@ -2,9 +2,9 @@
   "name": "scout-web",
   "version": "1.0.0",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host 0.0.0.0 --port 10000",
     "build": "vite build",
-    "start": "vite preview"
+    "start": "vite preview --host 0.0.0.0 --port 10000"
   },
   "dependencies": {
     "react": "^18.2.0",
