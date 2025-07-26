@@ -1,5 +1,4 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 export default function App() {
   const [image, setImage] = useState(null);
@@ -12,10 +11,25 @@ export default function App() {
       setImage(URL.createObjectURL(file));
       setResult("");
       setLoading(true);
-      setTimeout(() => {
-        setResult("🔎 Ймовірно: борошниста роса або дефіцит магнію. Рекомендується обробка триходермою та перевірка EC у зоні B2.");
+
+      // Читання в base64 для API
+      const reader = new FileReader();
+      reader.onloadend = async () => {
+        const base64 = reader.result.split(',')[1];
+        try {
+          const res = await fetch("http://localhost:8000/api/analyze", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ imageBase64: base64 })
+          });
+          const data = await res.json();
+          setResult(data);
+        } catch (err) {
+          setResult("Помилка аналізу зображення");
+        }
         setLoading(false);
-      }, 2000);
+      };
+      reader.readAsDataURL(file);
     }
   };
 
@@ -24,7 +38,7 @@ export default function App() {
       <h1>🌿 Scout Web – Діагностика канабісу</h1>
       <input type="file" accept="image/*" onChange={handleImageUpload} />
       {image && <img src={image} alt="Uploaded" style={{ width: "100%", borderRadius: 10, marginTop: 12 }} />}
-      {loading ? <p>Обробка зображення...</p> : (result && <p>{result}</p>)}
+      {loading ? <p>Обробка зображення AI...</p> : (result && <p>{result}</p>)}
     </div>
   );
 }
