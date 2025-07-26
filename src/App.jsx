@@ -12,7 +12,7 @@ export default function App() {
       setResult("");
       setLoading(true);
       setTimeout(() => {
-        setResult("🔎 Ймовірно: борошниста роса або дефіцит магнію.");
+        setResult("🔎 Ймовірно: борошниста роса або дефіцит магнію. Рекомендується обробка триходермою та перевірка EC у зоні B2.");
         setLoading(false);
       }, 2000);
     }
@@ -22,8 +22,8 @@ export default function App() {
     <div style={{ maxWidth: 600, margin: "0 auto", padding: 20 }}>
       <h1>🌿 Scout Web – Діагностика канабісу</h1>
       <input type="file" accept="image/*" onChange={handleImageUpload} />
-      {image && <img src={image} alt="Uploaded" style={{ width: "100%", borderRadius: 10 }} />}
-      {loading ? <p>Обробка зображення...</p> : <p>{result}</p>}
+      {image && <img src={image} alt="Uploaded" style={{ width: "100%", borderRadius: 10, marginTop: 12 }} />}
+      {loading ? <p>Обробка зображення...</p> : (result && <p>{result}</p>)}
     </div>
   );
 }
