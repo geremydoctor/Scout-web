@@ -12,7 +12,7 @@ export default function App() {
       setResult("");
       setLoading(true);
 
-      // Читання в base64 для API
+      // Зчитування зображення у base64 для API
       const reader = new FileReader();
       reader.onloadend = async () => {
         const base64 = reader.result.split(',')[1];
@@ -23,7 +23,7 @@ export default function App() {
             body: JSON.stringify({ imageBase64: base64 })
           });
           const data = await res.json();
-          setResult(data);
+          setResult(typeof data === "string" ? data : (data.error || "Помилка аналізу зображення"));
         } catch (err) {
           setResult("Помилка аналізу зображення");
         }
