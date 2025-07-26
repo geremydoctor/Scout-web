@@ -6,5 +6,8 @@ export default {
   preview: {
     host: '0.0.0.0',
     port: process.env.PORT ? parseInt(process.env.PORT) : 10000,
+    allowedHosts: [
+      'scout-web.onrender.com'
+    ]
   }
 }
